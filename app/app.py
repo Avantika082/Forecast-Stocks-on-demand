@@ -42,6 +42,8 @@ api_key = st.secrets["alphavantage"]["api_key"]
 # Fetch stock data
 series = get_data(symbol, api_key)
 
+
+
 # Ensure data is not empty before proceeding
 if not series.empty:
     series_diff = series.diff().dropna()
