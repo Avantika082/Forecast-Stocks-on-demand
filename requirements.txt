@@ -5,3 +5,4 @@ statsmodels
 plotly        
 seaborn      
 scikit-learn
+requests
