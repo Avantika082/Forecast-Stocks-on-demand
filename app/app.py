@@ -48,17 +48,19 @@ st.dataframe(series)
 if not series.empty:
     series_diff = series.diff().dropna()
 
-    if st.button("🔮 Predict Next 7 Days Stock Price"):
+
+model = ARIMA(series_diff, order=(3, 1, 1))
+model_fit = model.fit()
+forecast = model_fit.forecast(steps=7)
+
+if st.button("🔮 Predict Next 7 Days Stock Price"):
         with st.spinner("Running ARIMA model and forecasting..."):
             try:
-                model = ARIMA(series_diff, order=(3, 1, 1))
-                model_fit = model.fit()
-                forecast = model_fit.forecast(steps=7)
 
                 st.subheader("📊 7-Day Forecast (Differenced)")
                 st.line_chart(forecast)
 
             except Exception as e:
-                st.error(f"Error during model fitting or forecasting: {e}")
+                st.error(f"Error during model forecasting: {e}")
 else:
     st.warning("No data available to display. Please check your API key or network.")
