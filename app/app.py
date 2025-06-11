@@ -42,25 +42,25 @@ api_key = st.secrets["alphavantage"]["api_key"]
 # Fetch stock data
 series = get_data(symbol, api_key)
 
-st.dataframe(series)
 
 # Ensure data is not empty before proceeding
 if not series.empty:
-    series_diff = series.diff().dropna()
-
-
-model = ARIMA(series_diff, order=(3, 1, 1))
-model_fit = model.fit()
-forecast = model_fit.forecast(steps=7)
-
-if st.button("🔮 Predict Next 7 Days Stock Price"):
+     
+     st.subheader("📅 Recent Stock Prices")
+     st.dataframe(series.tail(10))
+    
+     if st.button("🔮 Predict Next 7 Days Stock Price"):
         with st.spinner("Running ARIMA model and forecasting..."):
             try:
+                series_diff = series.diff().dropna()
+                model = ARIMA(series_diff, order=(3, 1, 1))
+                model_fit = model.fit()
+                forecast = model_fit.forecast(steps=7)
 
                 st.subheader("📊 7-Day Forecast (Differenced)")
                 st.line_chart(forecast)
 
             except Exception as e:
                 st.error(f"Error during model forecasting: {e}")
-else:
-    st.warning("No data available to display. Please check your API key or network.")
+     else:
+        st.warning("No data available to display. Please check your API key or network.")
