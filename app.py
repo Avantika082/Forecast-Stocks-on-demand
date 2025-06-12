@@ -22,6 +22,10 @@ def get_data(symbol: str, api_key: str) -> pd.Series:
         response.raise_for_status()
 
         data = response.json().get("Time Series (Daily)", {})
+
+        raw_data = response.json()
+        st.write("Raw API response:", raw_data)
+
         if not data:
             raise ValueError("API response did not contain stock data.")
 
