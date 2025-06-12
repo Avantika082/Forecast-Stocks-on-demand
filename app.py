@@ -62,5 +62,4 @@ if not series.empty:
 
             except Exception as e:
                 st.error(f"Error during model forecasting: {e}")
-     else:
-        st.warning("No data available to display. Please check your API key or network.")
+     
